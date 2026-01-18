@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Cinta Buat Dyna 🤍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d946a6;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 15px;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 0.95em;
+        }
+
+        .envelope-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .envelope-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope {
+            position: relative;
+            width: 150px;
+            height: 110px;
+            margin: 0 auto 15px;
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffb899 0%, #ff8c66 100%);
+            clip-path: polygon(0 0, 50% 60%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            width: 100%;
+            height: 70px;
+            top: 0;
+            background: linear-gradient(135deg, #ffcc99 0%, #ffb899 100%);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transition: transform 0.3s ease;
+            transform-origin: top center;
+        }
+
+        .envelope-item.opened .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-front {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 45%;
+            background: linear-gradient(180deg, #ff9977 0%, #ff8c66 100%);
+        }
+
+        .envelope-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            z-index: 2;
+        }
+
+        .envelope-item:nth-child(1) .envelope-flap {
+            background: linear-gradient(135deg, #ffcc99 0%, #ffb899 100%);
+        }
+
+        .envelope-item:nth-child(2) .envelope-flap {
+            background: linear-gradient(135deg, #ffb3d9 0%, #ff99cc 100%);
+        }
+
+        .envelope-item:nth-child(3) .envelope-flap {
+            background: linear-gradient(135deg, #b99fff 0%, #9966ff 100%);
+        }
+
+        .envelope-item:nth-child(4) .envelope-flap {
+            background: linear-gradient(135deg, #ffe680 0%, #ffcc00 100%);
+        }
+
+        .envelope-label {
+            color: #666;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal-image {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-text {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .music-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .music-icon {
+            font-size: 20px;
+            animation: musicPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .music-text {
+            color: #666;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .char-kangen {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .char-semangat {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+        }
+
+        .char-gabut {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+        }
+
+        .char-kesel {
+            background: linear-gradient(135deg, #ffe0b2 0%, #ffcc80 100%);
+        }
+
+        /* File Upload Input (Hidden) */
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Surat Cinta Buat dyna 🤍</h1>
+        <p class="subtitle">Buka amplopnya sesuai perasaanmu ya...</p>
+        
+        <div class="envelope-grid">
+            <div class="envelope-item" data-type="kangen">
+                <div class="envelope">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front"></div>
+                    <div class="envelope-icon">❤️</div>
+                </div>
+                <div class="envelope-label">Lagi Kangen</div>
+            </div>
+
+            <div class="envelope-item" data-type="semangat">
+                <div class="envelope">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front"></div>
+                    <div class="envelope-icon">⚡</div>
+                </div>
+                <div class="envelope-label">Butuh Semangat</div>
+            </div>
+
+            <div class="envelope-item" data-type="gabut">
+                <div class="envelope">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front"></div>
+                    <div class="envelope-icon">🎵</div>
+                </div>
+                <div class="envelope-label">Lagi Gabut</div>
+            </div>
+
+            <div class="envelope-item" data-type="kesel">
+                <div class="envelope">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front"></div>
+                    <div class="envelope-icon">😊</div>
+                </div>
+                <div class="envelope-label">Lagi Kesel</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeBtn">✕</button>
+            <div class="modal-image" id="modalImage"></div>
+            <p class="modal-text" id="modalText"></p>
+            <div class="music-indicator">
+                <span class="music-icon">🎵</span>
+                <span class="music-text">Sedang memutar musik...</span>
+            </div>
+            <audio id="bgMusic" loop autoplay></audio>
+        </div>
+    </div>
+
+    <!-- Hidden file inputs untuk upload musik -->
+    <input type="file" id="musicKangen" accept="audio/*">
+    <input type="file" id="musicSemangat" accept="audio/*">
+    <input type="file" id="musicGabut" accept="audio/*">
+    <input type="file" id="musicKesel" accept="audio/*">
+
+    <script>
+        // LETAKKAN FILE MUSIK KAMU DI FOLDER YANG SAMA DENGAN FILE HTML INI
+        // LALU GANTI NAMA FILE DI BAWAH INI SESUAI NAMA FILE MUSIK KAMU
+        
+        const messages = {
+            kangen: {
+                text: "Kangen ya? Sama aku juga! Sini peluk online dulu biar gak sedih... 🤗🤍",
+                music: "kangen.mp3", // GANTI dengan nama file musik kamu
+                svg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="300" height="300" fill="#e3f2fd"/>
+                    <ellipse cx="120" cy="180" rx="50" ry="60" fill="#5fa3d0"/>
+                    <ellipse cx="120" cy="190" rx="35" ry="45" fill="#fff"/>
+                    <circle cx="115" cy="165" r="4" fill="#333"/>
+                    <circle cx="125" cy="165" r="4" fill="#333"/>
+                    <polygon points="120,175 115,180 125,180" fill="#ff9800"/>
+                    <ellipse cx="90" cy="200" rx="15" ry="40" fill="#5fa3d0"/>
+                    <ellipse cx="150" cy="200" rx="15" ry="40" fill="#5fa3d0"/>
+                    <ellipse cx="180" cy="180" rx="50" ry="60" fill="#5fa3d0"/>
+                    <ellipse cx="180" cy="190" rx="35" ry="45" fill="#fff"/>
+                    <line x1="175" y1="165" x2="175" y2="170" stroke="#333" stroke-width="2"/>
+                    <line x1="185" y1="165" x2="185" y2="170" stroke="#333" stroke-width="2"/>
+                    <polygon points="180,175 175,180 185,180" fill="#ff9800"/>
+                    <path d="M 145 190 Q 150 180 155 190" fill="#5fa3d0" stroke="#4a8bb8" stroke-width="2"/>
+                    <path d="M 155 190 Q 150 180 145 190" fill="#5fa3d0" stroke="#4a8bb8" stroke-width="2"/>
+                    <text x="150" y="120" font-size="24" fill="#e91e63" text-anchor="middle">🤍</text>
+                </svg>`
+            },
+            semangat: {
+                text: "Inget ya, kamu itu hebat banget. Jangan nyerah, aku selalu dukung kamu dari sini! 💪🤍",
+                music: "semangat.mp3", // GANTI dengan nama file musik kamu
+                svg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#e0f6ff;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="300" height="300" fill="url(#skyGrad)"/>
+                    <ellipse cx="150" cy="280" rx="150" ry="30" fill="#fff"/>
+                    <circle cx="50" cy="80" r="3" fill="#fff"/>
+                    <circle cx="100" cy="60" r="3" fill="#fff"/>
+                    <circle cx="150" cy="70" r="3" fill="#fff"/>
+                    <circle cx="200" cy="90" r="3" fill="#fff"/>
+                    <circle cx="250" cy="100" r="3" fill="#fff"/>
+                    <ellipse cx="150" cy="200" rx="45" ry="55" fill="#a0725f"/>
+                    <ellipse cx="150" cy="210" rx="30" ry="35" fill="#d4a574"/>
+                    <circle cx="150" cy="150" r="40" fill="#a0725f"/>
+                    <circle cx="130" cy="140" r="12" fill="#a0725f"/>
+                    <circle cx="170" cy="140" r="12" fill="#a0725f"/>
+                    <polygon points="150,110 130,135 170,135" fill="#e53935"/>
+                    <circle cx="150" cy="108" r="8" fill="#fff"/>
+                    <ellipse cx="150" cy="135" rx="25" ry="6" fill="#fff"/>
+                    <circle cx="140" cy="150" r="3" fill="#333"/>
+                    <circle cx="160" cy="150" r="3" fill="#333"/>
+                    <ellipse cx="110" cy="190" rx="12" ry="30" fill="#a0725f" transform="rotate(-30 110 190)"/>
+                    <ellipse cx="190" cy="190" rx="12" ry="30" fill="#a0725f" transform="rotate(30 190 190)"/>
+                    <path d="M 95 175 L 95 185 L 105 185 L 105 175 Z" fill="#ffd700"/>
+                    <circle cx="100" cy="188" r="3" fill="#ffd700"/>
+                    <path d="M 195 175 L 195 185 L 205 185 L 205 175 Z" fill="#ffd700"/>
+                    <circle cx="200" cy="188" r="3" fill="#ffd700"/>
+                </svg>`
+            },
+            gabut: {
+                text: "Gabut ya? Coba dengerin lagu kesukaan aku 🎵😋",
+                music: "gabut.mp3", // GANTI dengan nama file musik kamu
+                svg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="300" height="300" fill="#f0f0f0"/>
+                    <ellipse cx="150" cy="200" rx="40" ry="50" fill="#4a90e2"/>
+                    <circle cx="150" cy="140" r="35" fill="#4a90e2"/>
+                    <path d="M 150 115 L 140 105 L 145 115 Z" fill="#4a90e2"/>
+                    <path d="M 150 115 L 160 105 L 155 115 Z" fill="#4a90e2"/>
+                    <ellipse cx="150" cy="125" rx="38" ry="20" fill="#2c5aa0"/>
+                    <circle cx="140" cy="140" r="3" fill="#333"/>
+                    <circle cx="160" cy="140" r="3" fill="#333"/>
+                    <path d="M 140 150 Q 150 155 160 150" stroke="#333" stroke-width="2" fill="none"/>
+                    <rect x="50" y="250" width="200" height="8" fill="#4a90e2"/>
+                    <rect x="60" y="258" width="180" height="6" fill="#2c5aa0"/>
+                    <rect x="70" y="264" width="160" height="6" fill="#357abd"/>
+                    <rect x="80" y="270" width="140" height="6" fill="#e74c3c"/>
+                    <text x="80" y="100" font-size="28" fill="#333">🎵</text>
+                    <text x="190" y="120" font-size="24" fill="#333">🎶</text>
+                    <text x="200" y="240" font-size="28">😋</text>
+                </svg>`
+            },
+            kesel: {
+                text: "Maafin aku ya kalau ada salah... Jangan cemberut terus, nanti cantiknya ilang lho! 🙏🤍",
+                music: "kesel.mp3", // GANTI dengan nama file musik kamu
+                svg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="300" height="300" fill="#f5deb3"/>
+                    <ellipse cx="150" cy="200" rx="50" ry="65" fill="#000"/>
+                    <ellipse cx="150" cy="205" rx="35" ry="50" fill="#fff"/>
+                    <circle cx="150" cy="140" r="45" fill="#000"/>
+                    <ellipse cx="150" cy="150" rx="30" ry="25" fill="#fff"/>
+                    <path d="M 150 95 L 140 110 L 150 105 L 160 110 Z" fill="#9c27b0"/>
+                    <circle cx="135" cy="145" r="12" fill="none" stroke="#333" stroke-width="3"/>
+                    <circle cx="165" cy="145" r="12" fill="none" stroke="#333" stroke-width="3"/>
+                    <line x1="147" y1="145" x2="153" y2="145" stroke="#333" stroke-width="3"/>
+                    <circle cx="135" cy="145" r="4" fill="#4fc3f7"/>
+                    <circle cx="165" cy="145" r="4" fill="#4fc3f7"/>
+                    <polygon points="150,155 145,162 155,162" fill="#ff9800"/>
+                    <path d="M 115 180 Q 110 190 115 200 L 115 230 Q 115 240 125 240 L 175 240 Q 185 240 185 230 L 185 200 Q 190 190 185 180" fill="#4caf50"/>
+                    <ellipse cx="135" cy="268" rx="15" ry="8" fill="#ff9800"/>
+                    <ellipse cx="165" cy="268" rx="15" ry="8" fill="#ff9800"/>
+                    <text x="80" y="120" font-size="28">🤍</text>
+                    <text x="200" y="120" font-size="28">🙏</text>
+                </svg>`
+            }
+        };
+
+        const envelopeItems = document.querySelectorAll('.envelope-item');
+        const modal = document.getElementById('modal');
+        const closeBtn = document.getElementById('closeBtn');
+        const modalImage = document.getElementById('modalImage');
+        const modalText = document.getElementById('modalText');
+        const bgMusic = document.getElementById('bgMusic');
+
+        envelopeItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                const message = messages[type];
+                
+                this.classList.add('opened');
+                
+                setTimeout(() => {
+                    modalImage.innerHTML = message.svg;
+                    modalText.textContent = message.text;
+                    
+                    const modalContentEl = document.querySelector('.modal-content');
+                    modalContentEl.className = 'modal-content char-' + type;
+                    
+                    // Set dan putar musik
+                    bgMusic.src = message.music;
+                    bgMusic.play().catch(err => {
+                        console.log('Musik tidak dapat diputar:', err);
+                        document.querySelector('.music-text').textContent = 'Klik untuk memutar musik';
+                        document.querySelector('.music-controls').style.cursor = 'pointer';
+                        document.querySelector('.music-controls').onclick = () => bgMusic.play();
+                    });
+                    
+                    modal.classList.add('active');
+                }, 400);
+            });
+        });
+
+        function stopMusic() {
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+        }
+
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('active');
+            stopMusic();
+            envelopeItems.forEach(item => item.classList.remove('opened'));
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                stopMusic();
+                envelopeItems.forEach(item => item.classList.remove('opened'));
+            }
+        });
+    </script>
+</body>
+</html>
